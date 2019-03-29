@@ -6,14 +6,23 @@
 </head>
 <body>
 	<script>
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET','/ajax'); // 여기서 연결된다고 생각하면 편하다!
-		xhr.onreadystatechange = function(){
-			if(xhr.readyState==4&&xhr.status==200){
-				console.log(xhr.response);
-			}
+		function goAjax() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '/ajax'); // 여기서 연결된다고 생각하면 편하다!
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					console.log(xhr.response);
+				}
+			} 
+			xhr.send();
+			alert(1);
 		}
-		xhr.send();
 	</script>
+	<form method="get" action="/ajax">
+		<button>전송</button>
+		
+		
+	</form>
+	<button onclick="goAjax()">GoAJAX</button>
 </body>
 </html>
