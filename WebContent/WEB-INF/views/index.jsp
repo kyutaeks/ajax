@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ include file="/WEB-INF/views/common/header.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="/movie/list"><button>영화개봉리스트</button></a>
+<a href="/views/movie/ajax_list"><button>Ajax리스트가기</button></a><br>
 <c:if test="${sessionScope.user==null}">
 <form method="post" action="/user">
 <table border="1">
@@ -33,6 +35,7 @@
 <form method="post" action="/user">
 <input type="hidden" name="cmd" value="logout">
 <button>로그아웃</button>
+<a href="/views/list">리스트가기</a>
 </form>
 </c:if>
 </body>
