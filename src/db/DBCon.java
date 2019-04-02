@@ -1,38 +1,56 @@
 package db;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBCon {
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "osfu";
-	private static final String PASSWORD = "12345678";
-	private static final String DRIVER = "oracle.jdbc.OracleDriver";
+	private static final String URL;
+	private static final String USER;
+	private static final String PWD;
+	private static final String CLASS_NAME;
 	private static Connection con;
-
+	static {
+		Properties prop = new Properties();
+		InputStream is = DBCon.class.getResourceAsStream("/config/config.properties");
+		try {
+			prop.load(is);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		URL=prop.getProperty("url");
+		USER=prop.getProperty("user");
+		PWD=prop.getProperty("pwd");
+		CLASS_NAME=prop.getProperty("className");
+	}
+	
 	public static Connection getCon() {
-		if (con == null) {
+		if(con==null) {
 			try {
-				Class.forName(DRIVER);
-				con = DriverManager.getConnection(URL, USER, PASSWORD);
+				Class.forName(CLASS_NAME);
+				con = DriverManager.getConnection(URL, USER,PWD);
 			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SQLException e) {
-				e.printStackTrace(); 
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		return con;
-
 	}
-
+	
 	public static void close() {
-		if (con != null) {
+		if(con!=null) {
 			try {
-				if (!con.isClosed()) {
+				if(!con.isClosed()) {
 					con.close();
 				}
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
