@@ -35,7 +35,9 @@
 <form method="post" action="/user">
 <input type="hidden" name="cmd" value="logout">
 <button>로그아웃</button>
-<a href="/views/list">리스트가기</a>
+<!-- <a href="/views/list">리스트가기</a>
+ -->
+ 
 </form>
 </c:if>
 </body>

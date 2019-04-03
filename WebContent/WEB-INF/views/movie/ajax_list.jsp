@@ -21,7 +21,7 @@
 		</tbody>
 	</table>
 	<c:if test="${sessionScope.user!=null}">
-		<a href="/views/movie/insert"><button>개봉 영화 등록</button></a>
+		<a href="/views/movie/ajax_insert"><button>개봉 영화 등록</button></a>
 	</c:if>
 	<script>
 		var xhr = new XMLHttpRequest();
@@ -51,6 +51,7 @@
 			location.href = '/views/movie/ajax_view?miNum=' + miNum;
 		}
 	</script>
+	<form method="post" action="/"><button>처음</button></form>
 </body>
 </html>
 

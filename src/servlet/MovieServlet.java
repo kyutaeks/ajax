@@ -54,7 +54,7 @@ public class MovieServlet extends HttpServlet {
 			String url = "/movie/list";
 			if (ms.insertMovie(movie) == 1) {
 				msg = "영화등록성공!";
-				
+
 			}
 			Command.goResultPage(request, response, msg, url);
 		} else if ("delete".equals(cmd)) {
@@ -66,10 +66,11 @@ public class MovieServlet extends HttpServlet {
 			int miNum = Integer.parseInt(request.getParameter("mi_num"));
 
 			String msg = "삭제에 실패하였습니다.";
-			String url = "/movie/list";
+			String url = "/movie/" + miNum;
 			if (ms.deleteMovie(miNum) == 1) {
 				msg = "삭제에 성공하였습니다.";
-				
+				url = "/movie/list";
+
 			}
 			Command.goResultPage(request, response, msg, url);
 			RequestDispatcher rd = request.getRequestDispatcher("/views/msg/result");

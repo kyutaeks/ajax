@@ -45,6 +45,7 @@
 		location.href="/movie/"+miNum;
 	}
 	</script>
+	<a href="/"><button>처음</button></a>
 </body>
 </html>
 
