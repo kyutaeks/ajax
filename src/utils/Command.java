@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 public class Command {
 	private static final String RESULT_PATH = "/views/msg/result";
 	private static final Gson JSON = new Gson();
+
 	public static String getCmd(HttpServletRequest request) throws ServletException {
 		String uri = request.getRequestURI();
 		String cmd = request.getParameter("cmd");
@@ -39,6 +40,12 @@ public class Command {
 
 	}
 
+	public static void goPage(HttpServletRequest request, HttpServletResponse response, String url)
+			throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		rd.forward(request, response);
+	}
+
 	public static Map<String, String> getSingleMap(HttpServletRequest request) {
 		Map<String, String> pMap = new HashMap<>();
 		Map<String, String[]> map = request.getParameterMap();
@@ -50,10 +57,10 @@ public class Command {
 		}
 		return pMap;
 	}
-	
+
 	public static <T> void printJSON(HttpServletResponse response, T obj) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
-		PrintWriter pw =response.getWriter();
+		PrintWriter pw = response.getWriter();
 		pw.print(JSON.toJson(obj));
 	}
 }

@@ -86,7 +86,7 @@ public class FileServiceImpl implements FileService {
 				}
 
 			}
-//			Long subStime = System.currentTimeMillis();
+//			Long subStime = System.currentTimeMillis();,
 			totalCnt += fdao.insertAddressList(addrList);
 			targetCnt += addrList.size();
 			addrList.clear();
