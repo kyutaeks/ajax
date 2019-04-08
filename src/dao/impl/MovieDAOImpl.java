@@ -11,15 +11,17 @@ import java.util.Map;
 import dao.MovieDAO;
 import db.DBCon;
 
-public class MovieDAOImpl implements MovieDAO {
+public class MovieDAOImpl implements MovieDAO{
 	private String selectMovieList = "select * from movie_info order by mi_num desc";
 	private String selectMovieByMiNum = "select * from movie_info where mi_num=?";
-	private String insertMovie = "insert into movie_info" + " values(seq_mi_num.nextval,?,?,?,?,?)";
+	private String insertMovie = "insert into movie_info"
+			+ " values(seq_mi_num.nextval,?,?,?,?,?)";
 	private String deleteMovie = "delete from movie_info where mi_num=?";
-
-	public int insertMovie(Map<String, String> movie) {
+	
+	public int insertMovie(Map<String,String> movie) {
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(insertMovie);
+			PreparedStatement ps = 
+					DBCon.getCon().prepareStatement(insertMovie);
 			ps.setString(1, movie.get("mi_name"));
 			ps.setString(2, movie.get("mi_year"));
 			ps.setString(3, movie.get("mi_national"));
@@ -29,18 +31,17 @@ public class MovieDAOImpl implements MovieDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
 		return 0;
 	}
-
 	@Override
 	public List<Map<String, String>> selectMovieList() {
 		List<Map<String, String>> movieList = new ArrayList<>();
 		try {
 			PreparedStatement ps = DBCon.getCon().prepareStatement(selectMovieList);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Map<String, String> movie = new HashMap<>();
+			while(rs.next()) {
+				Map<String,String> movie = new HashMap<>();
 				movie.put("mi_num", rs.getString("mi_num"));
 				movie.put("mi_name", rs.getString("mi_name"));
 				movie.put("mi_year", rs.getString("mi_year"));
@@ -53,23 +54,18 @@ public class MovieDAOImpl implements MovieDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
 		return null;
 	}
-
-	public static void main(String[] args) {
-		MovieDAOImpl m = new MovieDAOImpl();
-		System.out.println(m.selectMovieList());
-	}
-
+	
 	@Override
 	public Map<String, String> selectMovieByMiNum(int miNum) {
 		try {
 			PreparedStatement ps = DBCon.getCon().prepareStatement(selectMovieByMiNum);
 			ps.setInt(1, miNum);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Map<String, String> movie = new HashMap<>();
+			while(rs.next()) {
+				Map<String,String> movie = new HashMap<>();
 				movie.put("mi_num", rs.getString("mi_num"));
 				movie.put("mi_name", rs.getString("mi_name"));
 				movie.put("mi_year", rs.getString("mi_year"));
@@ -83,11 +79,11 @@ public class MovieDAOImpl implements MovieDAO {
 		}
 		return null;
 	}
-
 	@Override
 	public int deleteMovie(int miNum) {
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(deleteMovie);
+			PreparedStatement ps = 
+					DBCon.getCon().prepareStatement(deleteMovie);
 			ps.setInt(1, miNum);
 			return ps.executeUpdate();
 		} catch (SQLException e) {

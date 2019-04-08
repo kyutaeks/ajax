@@ -22,23 +22,21 @@ import service.FileService;
 import utils.UploadFile;
 
 public class FileServiceImpl implements FileService {
-	private static FileDAO fdao = new FileDAOImpl();
-
+	private FileDAO fdao = new FileDAOImpl();
 	@Override
-	public Map<String, String> parseText(HttpServletRequest request) throws ServletException {
-		Map<String, Object> pMap = UploadFile.parseRequest(request);
+	public Map<String, String> parseText(HttpServletRequest request) throws ServletException{
+		Map<String,Object> pMap = UploadFile.parseRequest(request);
 		Iterator<String> it = pMap.keySet().iterator();
-		while (it.hasNext()) {
+		while(it.hasNext()) {
 			String key = it.next();
 			Object obj = pMap.get(key);
-			if (obj instanceof FileItem) { // obj 를 파일아이템이라고 불러도되? 라고 물어보는것 instanceof
+			if(obj instanceof FileItem) {
 				try {
-					File tFile = UploadFile.writeFile((FileItem) obj);
+					File tFile = UploadFile.writeFile((FileItem)obj);
 					return insertAddrFromFile(tFile);
 				} catch (Exception e) {
 					throw new ServletException(e);
 				}
-
 			}
 		}
 		return null;
@@ -46,7 +44,7 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public Map<String, String> insertAddrFromFile(File file) {
-		Map<String, String> rMap = new HashMap<>();
+		Map<String,String> rMap = new HashMap<>();
 		int totalCnt = 0;
 		int targetCnt = 0;
 		Long sTime = System.currentTimeMillis();
@@ -65,32 +63,26 @@ public class FileServiceImpl implements FileService {
 		colList.add("ad_subnum");
 		colList.add("ad_jinum");
 		colList.add("ad_etc");
-
-		try {
-			FileReader fr = new FileReader(file);
-			BufferedReader br = new BufferedReader(fr);
+		try (FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);){
 			String line = "";
-			List<Map<String, String>> addrList = new ArrayList<>();
-//			int cnt = 1;
-			while ((line = br.readLine()) != null) {
+			List<Map<String,String>> addrList = new ArrayList<>();
+			while((line=br.readLine())!=null) {
 				String[] lines = line.split("\\|");
-				Map<String, String> addrMap = new HashMap<>();
-				for (int i = 0; i < lines.length; i++) {
+				Map<String,String> addrMap = new HashMap<>();
+				for(int i=0;i<lines.length;i++) {
 					addrMap.put(colList.get(i), lines[i]);
 				}
 				addrList.add(addrMap);
-				if (addrList.size() == 1000) {
-//					Long subStime = System.currentTimeMillis();
+				if(addrList.size()==10000) {
 					totalCnt += fdao.insertAddressList(addrList);
 					addrList.clear();
+					targetCnt+=10000;
 				}
-
 			}
-//			Long subStime = System.currentTimeMillis();,
 			totalCnt += fdao.insertAddressList(addrList);
 			targetCnt += addrList.size();
 			addrList.clear();
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -98,8 +90,7 @@ public class FileServiceImpl implements FileService {
 		}
 		rMap.put("targetCnt", targetCnt + "");
 		rMap.put("totalCnt", totalCnt + "");
-		rMap.put("executTime", (System.currentTimeMillis() - sTime) + "");
-
+		rMap.put("executTime", (System.currentTimeMillis() - sTime)+"");
 		return rMap;
 	}
 
