@@ -46,7 +46,7 @@
 		xhr.open('GET','/addr2/view?ad_num=' + adNum);
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState ==4){
-				if(xhr.status) == 200){
+				if(xhr.status == 200){
 					document.qeurySelector('#dView').innerHTML = xhr.response;
 				}
 			}
