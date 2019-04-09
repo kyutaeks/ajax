@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,12 +40,16 @@
 			<th>호수</th>
 			<td>${addr.ad_ho}</td>
 		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<button onclick="closeTable()">닫기</button>
+			</td>
+		</tr>
 	</table>
-	<button onclick="closeTable()">닫기</button>
-	<script>
-		function goList() {
-			document.querySelector('#addrTable').style.display='none';
-		}
-	</script>
+<script>
+	function closeTable(){
+		document.querySelector('#addrTable').style.display='none';
+	}
+</script>	
 </body>
 </html>

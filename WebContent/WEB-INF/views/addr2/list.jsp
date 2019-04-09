@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,50 +8,51 @@
 </head>
 <body>
 
-	<label for="ad_dong">읍면동 : </label>
-	<input type="text" name="ad_dong" id="ad_dong">
-	<button onclick="search()">검색</button>
-	<select id="pageCount" name="pageCount"
-		onchange="changePageCount(this)">
-		<option value="10">10</option>
-		<option value="20">20</option>
-		<option value="30">30</option>
-		<option value="40">40</option>
-		<option value="50">50</option>
-	</select>
+<label for="ad_dong">읍면동 : </label><input type="text" name="ad_dong" id="ad_dong">
+<button onclick="search()">검색</button>
+<select id="pageCount" name="pageCount" onchange="changePageCount(this)">
+	<option value="10">10</option>
+	<option value="20">20</option>
+	<option value="30">30</option>
+	<option value="40">40</option>
+	<option value="50">50</option>
+</select>
 
-	<table border="1">
-		<tr>
-			<th>번호</th>
-			<th>시도</th>
-			<th>구군</th>
-			<th>동</th>
-			<th>리</th>
-			<th>번지</th>
-			<th>호</th>
-		</tr>
-		<tbody id="tBody">
-		</tbody>
-	</table>
-	<div id="dView"></div>
-	<script>
+<table border="1">
+	<tr>
+		<th>번호</th>
+		<th>시도</th>
+		<th>구군</th>
+		<th>동</th>
+		<th>리</th>
+		<th>번지</th>
+		<th>호</th>
+	</tr>
+	<tbody id="tBody">
+	</tbody>
+</table>
+<div id="dView"></div>
+<script>
 	function search(){
 		var ad_dong = document.querySelector('#ad_dong').value;
-		location.href="/views/addr2/list?pageCount=${param.pageCount}&ad_dong=" + ad_dong;	
+		location.href="/views/addr2/list?pageCount=${param.pageCount}&ad_dong=" + ad_dong;
 	}
 	function changePageCount(obj){
 		location.href='/views/addr2/list?pageCount=' + obj.value;
 	}
 	function view(adNum){
-		xhr.open('GET','/addr2/view?ad_num=' + adNum);
-		xhr.onreadystatechange=function(){
-			if(xhr.readyState ==4){
+		xhr.open('GET','/views/addr2/view?ad_num=' + adNum);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4){
 				if(xhr.status == 200){
-					document.qeurySelector('#dView').innerHTML = xhr.response;
+					document.querySelector('#dView').innerHTML = xhr.response;
 				}
 			}
 		}
 		xhr.send();
+	}
+	function closeTable(){
+		document.querySelector('#addrTable').style.display='none';
 	}
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET','/addr2/list?pageCount=${param.pageCount}&page=${param.page}&ad_dong=${param.ad_dong}');
@@ -92,5 +93,3 @@
 </script>
 </body>
 </html>
-
-

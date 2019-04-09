@@ -25,13 +25,13 @@ public class AddrDAOImpl implements AddrDAO {
 		String adDong = addr.get("ad_dong");
 		String sql = selectAddrListSql.replace("$where$", "");
 		try {
-			if(adDong!=null) {
+			if(adDong!=null && !"".equals(adDong)) {
 				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%'");
 			}
 			PreparedStatement ps = DBCon.getCon().prepareStatement(sql);
 			ps.setString(1, addr.get("lNum"));
 			ps.setString(2, addr.get("sNum"));
-			if(adDong!=null) {
+			if(adDong!=null && !"".equals(adDong)) {
 				ps.setString(1, adDong);
 				ps.setString(2, addr.get("lNum"));
 				ps.setString(3, addr.get("sNum"));
@@ -103,9 +103,3 @@ public class AddrDAOImpl implements AddrDAO {
 	}
 	
 }
-
-
-
-
-
-

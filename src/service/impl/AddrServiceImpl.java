@@ -23,7 +23,6 @@ public class AddrServiceImpl implements AddrService {
 			page = Integer.parseInt(paramMap.get("page"));
 		}
 		if(paramMap.get("pageCount")!=null && !"".equals(paramMap.get("pageCount"))){
-			
 			pageCount = Integer.parseInt(paramMap.get("pageCount"));
 		}
 		if(paramMap.get("blockCount")!=null) {
@@ -59,6 +58,7 @@ public class AddrServiceImpl implements AddrService {
 
 	@Override
 	public int selectTotalAddrCnt() {
+		//return adao.selectTotalAddrCnt();
 		return 0;
 	}
 
@@ -79,7 +79,3 @@ public class AddrServiceImpl implements AddrService {
 	}
 
 }
-
-
-
-

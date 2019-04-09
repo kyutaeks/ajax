@@ -33,7 +33,7 @@ public class AddrServlet2 extends HttpServlet {
 			Command.printJSON(response, rMap);
 		}else if("view".equals(cmd)) {
 			as.selectAddr(request);
-			Command.goPage(request, response, "/views/addr1/view");
+			Command.goPage(request, response, "/views/addr2/view");
 		}
 	}
 
