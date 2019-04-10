@@ -18,7 +18,7 @@ var AjaxUtil = function() {
 		async = async ? async : false;
 		xhr.open(method, url, async);
 		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4) {
+			if (xhr.readyState == xhr.DONE) {
 				if (xhr.status == 200) {
 					this.callback(xhr.response);
 				}

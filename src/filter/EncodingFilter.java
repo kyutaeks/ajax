@@ -13,7 +13,7 @@ public class EncodingFilter implements Filter {
 	private String encoding = "";
 
 	public EncodingFilter() {
-//		System.out.println("난 무조건 첫빠따!!");
+		System.out.println("서버 업데이트됨.");
 	}
 
 	public void destroy() {
