@@ -164,7 +164,7 @@
 					html += '<td>' + (addr.ad_lee?addr.ad_lee:'') + '</td>';
 					html += '<td>' + addr.ad_bunji + '</td>';
 					html += '<td>' + addr.ad_ho + '</td>';
-					html += '<td><button onclick="deleteAddr(\'' + addr.ad_num + '\')">삭제</button></td>';
+					html += '<td><button onclick="deleteAddr2(\'' + addr.ad_num + '\')">삭제</button></td>';
 					html += '</tr>';
 				}
 				html +='<tr align="center">';
