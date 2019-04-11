@@ -14,7 +14,13 @@ public interface AddrService {
 	public int selectTotalAddrCnt();
 
 	public Map<String, String> updateAddr(HttpServletRequest request) throws IOException;
-	
+
 	public Map<String, String> deleteAddr(HttpServletRequest request) throws IOException;
-	
+
+	public List<String> selectAdSido();
+
+	public List<String> selectAdGugun();
+
+	public List<String> selectAdGugunList(String adSido);
+
 }

@@ -74,8 +74,9 @@
 					var res = JSON.parse(xhr.response);
 					alert(res.msg);
 					if(res.update==='true'){
-						getList();
-						view(params.adNum);
+						closeTable();
+						getList(); 
+						
 					}else{
 						
 					}	
@@ -175,8 +176,9 @@
 					}else{
 						html += '<a href="/views/addr2/list?pageCount=' + res.pageCount + '&page=' + i + '">[' + i + ']</a>';
 					}
-				}
-				html += '</td>';
+				}/* page=${page+10}&pageCount=${pageCount} */
+				/* html +=  '<a href="/addr/list?page='+ res.page + 10 +'pageCount='+ res.pageCount + '">' '→' + '</a>' ;  */
+				html += '</td>'; 
 				html +='</tr>';				
 				document.querySelector('#tBody').innerHTML = html;
 			}

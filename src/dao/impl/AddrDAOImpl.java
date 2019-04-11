@@ -1,5 +1,6 @@
 package dao.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import dao.AddrDAO;
 import db.DBCon;
@@ -21,6 +20,8 @@ public class AddrDAOImpl implements AddrDAO {
 	private static String updateAddr = "update address set ad_code=?, ad_sido=?, ad_gugun=?, ad_dong=?, ad_lee=?,"
 			+ " ad_bunji=?, ad_ho=? where ad_num=?";
 	private static String deleteAddr = "delete address where ad_num=?";
+	private static String selectAdSido = "select distinct ad_sido from address order by ad_sido";
+	private static String selectAdGugun = "select distinct ad_gugun from address where ad_sido=? order by ad_gugun";
 
 	@Override
 	public List<Map<String, String>> selectAddrList(Map<String, String> addr) {
@@ -54,6 +55,8 @@ public class AddrDAOImpl implements AddrDAO {
 			return addrList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBCon.close();
 		}
 		return null;
 	}
@@ -76,6 +79,8 @@ public class AddrDAOImpl implements AddrDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBCon.close();
 		}
 		return 0;
 	}
@@ -100,6 +105,8 @@ public class AddrDAOImpl implements AddrDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBCon.close();
 		}
 		return null;
 	}
@@ -120,7 +127,7 @@ public class AddrDAOImpl implements AddrDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			DBCon.close();
 		}
 		return 0;
@@ -134,11 +141,49 @@ public class AddrDAOImpl implements AddrDAO {
 			return ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			DBCon.close();
 		}
-		
+
 		return 0;
 	}
+
+	@Override
+	public List<String> selectAdSido() {
+		try (Connection con = DBCon.getCon(); PreparedStatement ps = con.prepareStatement(selectAdSido)) {
+			ResultSet rs = ps.executeQuery();
+			List<String> adSidoList = new ArrayList<>();
+			while (rs.next()) {
+				adSidoList.add(rs.getString("ad_sido"));
+			}
+			return adSidoList;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			DBCon.close();
+		}
+		return null;
+	}
+
+	@Override
+	public List<String> selectAdGugunList(String adSido) {
+		try (Connection con = DBCon.getCon(); PreparedStatement ps = con.prepareStatement(selectAdGugun)) {
+			ps.setString(1, adSido);
+			ResultSet rs = ps.executeQuery();
+			List<String> adSidoList = new ArrayList<>();
+			while (rs.next()) {
+				adSidoList.add(rs.getString("ad_gugun"));
+			}
+			return adSidoList;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			DBCon.close();
+		}
+		return null;
+	}
+
 
 }
