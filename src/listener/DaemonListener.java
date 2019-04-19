@@ -14,7 +14,7 @@ import service.impl.FileServiceImpl;
 
 public class DaemonListener implements ServletContextListener, Runnable {
 	private Thread t;
-	private static final long BREAK_TIME = 3000;
+	private static final long BREAK_TIME = 2000;
 	private FileService fs = new FileServiceImpl();
 
 	public DaemonListener() {
